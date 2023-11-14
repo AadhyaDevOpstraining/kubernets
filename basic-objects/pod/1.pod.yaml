@@ -1,0 +1,32 @@
+apiVersion:[v1| apps/v1]
+kind:[Pod| Deployment |Service | PersistentVolume |
+metadata: 
+  name:<Value>
+  lable:<Value>
+spec: 
+  containers:
+    name:<Value>
+	image: <Value>
+    command:<Value>
+    workingDir:<Value>
+    ports:<Value>
+    env:<Value>
+    resources: <Value>
+    volumeMounts:<Value>
+	livenessProbe:<Value>
+	readinessProbe:<Value>
+################################
+#Example:1
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <PodName>
+  labels:
+    <Key>: <value>
+  namespace: <nameSpaceName>
+spec:
+  containers:
+  - name: <NameOfTheCotnainer>
+    image: <imagaName>
+	ports:
+	- containerPort: <portOfContainer>

@@ -1,0 +1,11 @@
+kind: Pod
+apiVersion: v1
+metadata:
+ name: testpod2
+ annotations:                 
+   description: our first
+spec:
+  containers:  
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Mallikarjun; sleep 5; done"]

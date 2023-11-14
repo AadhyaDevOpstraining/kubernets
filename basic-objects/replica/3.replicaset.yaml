@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: <RSName>
+spec:
+  replicas: <noOfPODReplicas>
+  selector:  # To Match POD Labels.
+    matchLabels:  # Equality Based Selector
+	  <key>: <value>
+    matchExpressions:  # Set Based Selector 
+	- key: <key>
+	  operator: <in/not in>
+	  values:
+	  - <value1>
+	  - <value2>
+  template:
+    metadata:
+	  name: <PODName>
+	  labels:
+	    <key>: <value>
+	spec:
+	- containers:
+	  - name: <nameOfTheContainer>
+	    image: <imageName>
+		ports:
+		- containerPort: <containerPort>

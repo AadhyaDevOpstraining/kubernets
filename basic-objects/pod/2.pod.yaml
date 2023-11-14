@@ -1,0 +1,15 @@
+kind: Pod                  #Object Type
+apiVersion: v1             #API version
+metadata:                  # set of data which describe the object
+ name: testpod             # Name of the Object
+spec:                      # Data which describe the state of the Object
+ containers:               # Data which describe the Containers details
+  - name: c00              # Name of the Container
+    image: ubuntu          # Base Image which is used to create Containers
+    command: ["/bin/bash", "-c", "while true; do echo Hello-Mallikarjun; sleep 5; done"]
+ restartPolicy: Never      # Default to Always
+
+#* Always: means that the container will be restarted even if it exited with a zero exit code
+#* Onfailure: Means that the container will only be restarted if it  exited with a non-zero exite 
+  code
+#* Never: Means that the container will not be restarted regarding regardless why it exited 

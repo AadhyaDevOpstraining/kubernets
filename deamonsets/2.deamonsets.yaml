@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  name: mavenwebappds
+spec: 
+  selector: 
+    matchLabels: 
+      app: mavenwebapp
+  template: 
+    metadata: 
+	  name: mavenwebapppod
+      labels: 
+        app: mavenwebapp
+    spec: 
+      containers: 
+      - image: dockerhandson/maven-web-app
+        name: mavenwebappcontainer
+        ports: 
+        - containerPort: 8080
+		
+#kubectl get ds 
+#kubectl get ds -n <namespace>
+#kubectl get all
+
+
+#kubectl describe ds <dsName>
+#kubectl delete ds <dsName>
