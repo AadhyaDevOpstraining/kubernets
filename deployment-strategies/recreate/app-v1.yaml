@@ -57,3 +57,8 @@ spec:
             path: /ready
             port: probe
           periodSeconds: 5
+
+# What is recreate strategy in Kubernetes?
+#Recreate deployment—an all-or-nothing method that lets you update an application instantly, with some downtime.
+#It terminates all pods and replaces them with the new version. Ramped slow rollout—rolls out replicas of the 
+#new version, while in parallel, shutting down old replicas.
