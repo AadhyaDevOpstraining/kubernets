@@ -8,7 +8,7 @@ spec:
       app: mavenwebapp
   template: 
     metadata: 
-	  name: mavenwebapppod
+      name: mavenwebapppod
       labels: 
         app: mavenwebapp
     spec: 
@@ -17,7 +17,8 @@ spec:
         name: mavenwebappcontainer
         ports: 
         - containerPort: 8080
-		
+
+ 
 #kubectl get ds 
 #kubectl get ds -n <namespace>
 #kubectl get all
