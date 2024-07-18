@@ -209,6 +209,210 @@ kubectl get svc -n <namespace>
 
 ACCESS OUTSIDE USING NODEIP:NODEPORT.
 
+POD --> Pod is the smallest building block which we can deploy in k8s.Pod represents running process.Pod contains one or more containers.These container will share same network,storage and any other specifications.Pod will have unique IP Address in k8s cluster.
+
+Pods
+ SingleContainerPods --> Pod will have only one container.
+ 
+ MultiContainerPods(SideCar) --> POD will two or more contianers.
+ 
+We should not create pods directly for deploying applications.If pod is down it wont be rescheduled.
+
+We have to create pods with help of controllers.Which manages POD life cycle.
+
+
+					
+
+
+Controllers
+===========
+
+ReplicationController
+ReplicaSet
+DaemonSet
+Deploymnet
+StatefullSet
+
+
+
+
+# Replication Conrtoller
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: <replicationControllerName>
+  namespace: <nameSpaceName>
+spec:
+  replicas: <noOfReplicas>
+  selector:
+    <key>: <value>
+  template: # POD Template
+    metadata:
+	  name: <PODName>
+	  labels:
+	    <key>: <value>
+	spec:
+	- containers:
+	  - name: <nameOfTheContainer>
+	    image: <imageName>
+		ports:
+		- containerPort: <containerPort>
+  	
+Example:
+========
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: javawebapprc
+spec:
+  replicas: 1
+  selector:
+    app: javawebapp
+  template:
+    metadata:
+      name: javawebapppod
+      labels:
+        app: javawebapp
+    spec:
+      containers:
+      - name: javawebappcontainer
+        image: dockerhandson/java-web-app
+        ports:
+        - containerPort: 8080
+
+kubectl apply -f <filename.yml>
+kubectl get rc 
+kubectl get rc -n <namespace>
+kubectl get all
+kubectl scale rc <rcName> --replicas <noOfReplicas>
+
+kubectl describe rc <rcName>
+kubectl delete rc <rcName>
+
+ReplicaSet:
+
+What is difference b/w replicaset and replication controller?
+
+It's next gernation of replication controller. Both manages the pod replicas. But only difference as now is
+selector support.
+
+RC --> Supports only equality based selectors.
+
+key == value(Equal Condition)
+selector:
+    app: javawebapp
+
+RS --> Supports eqaulity based selectors and also set based selectors.
+
+
+key == value(Equal Condition)
+
+Set Based
+key in (value1,value2,value3)
+key notin (value1) 
+
+selector:
+   matchLabels: # Equality Based
+     key: value
+   matchExpressions: # Set Based
+   - key: app
+     operator: IN
+	 values:
+	 - javawebpp
+	 - javawebapplication
+	 
+# Mainfest File RS
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: <RSName>
+spec:
+  replicas: <noOfPODReplicas>
+  selector:  # To Match POD Labels.
+    matchLabels:  # Equality Based Selector
+	  <key>: <value>
+    matchExpressions:  # Set Based Selector 
+	- key: <key>
+	  operator: <in/not in>
+	  values:
+	  - <value1>
+	  - <value2>
+  template:
+    metadata:
+	  name: <PODName>
+	  labels:
+	    <key>: <value>
+	spec:
+	- containers:
+	  - name: <nameOfTheContainer>
+	    image: <imageName>
+		ports:
+		- containerPort: <containerPort>
+
+
+Example:
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: javawebapprs
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: javawebapp
+  template: 
+    metadata: 
+      name: javawebapppod
+      labels: 
+        app: javawebapp
+    spec: 
+      containers: 
+      - image: dockerhandson/java-web-app:1
+        name: javawebappcontainer
+        ports: 
+        - containerPort: 8080
+
+
+kubectl get rs 
+kubectl get rs -n <namespace>
+kubectl get all
+kubectl scale rs <rsName> --replicas <noOfReplicas>
+
+kubectl describe rs <rsName>
+kubectl delete rs <rsName>
+
+
+
+
+
+What is difference b/w kubectl create and kubectl apply ?
+
+Create will Create an Object if it's not already created. Apply will perfrom create if object is not created earlier.If it's already
+created it will update.			   
+			   
+			   
+			   	
+
+kubectl apply (create & update)
+
+kubectl create -f <fileName.yml>
+
+kubectl update -f <fileName.yml>
+
+
+Change/Switch Context(NameSpace)
+=================================
+
+# View kubectl context
+kubectl config view | grep namespace
+
+
+# Change/Switch namespace
+
+kubectl config set-context --current  --namespace=<namespace>
+
 
 
 
